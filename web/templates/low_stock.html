@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block title %}Low Stock - Inventory Management System{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="fas fa-exclamation-triangle"></i> Low Stock Alert</h1>
+    <div>
+        <a href="{{ url_for('list_products') }}" class="btn btn-secondary me-2">
+            <i class="fas fa-arrow-left"></i> Back to Products
+        </a>
+    </div>
+</div>
+
+<!-- Threshold Selector -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form id="thresholdForm" action="{{ url_for('low_stock') }}" method="get" class="row align-items-center g-3">
+            <div class="col-auto">
+                <label for="thresholdInput" class="col-form-label">Show products with stock below:</label>
+            </div>
+            <div class="col-auto">
+                <input type="number" id="thresholdInput" name="threshold" value="{{ threshold }}" min="1" class="form-control" style="width: 80px;">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Apply</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="table-container">
+    <div class="table-responsive">
+        {% if products %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr class="{% if product.quantity <= 2 %}stock-danger{% else %}stock-warning{% endif %}">
+                    <td>{{ product.product_id[:8] }}...</td>
+                    <td>{{ product.name }}</td>
+                    <td>
+                        {% for category in categories %}
+                            {% if category.category_id == product.category %}
+                                <span class="badge bg-secondary">{{ category.name }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>${{ "%.2f"|format(product.price) }}</td>
+                    <td class="stock-low">{{ product.quantity }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="{{ url_for('add_stock', product_id=product.product_id) }}" class="btn btn-sm btn-success btn-action" data-bs-toggle="tooltip" title="Add Stock">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                            <a href="{{ url_for('edit_product', product_id=product.product_id) }}" class="btn btn-sm btn-primary btn-action" data-bs-toggle="tooltip" title="Edit Product">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{{ url_for('list_transactions') }}?product_id={{ product.product_id }}" class="btn btn-sm btn-info btn-action" data-bs-toggle="tooltip" title="View Transactions">
+                                <i class="fas fa-history"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-success text-center">
+            No products found with stock below {{ threshold }} units. All stock levels are good!
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

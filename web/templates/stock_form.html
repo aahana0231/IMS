@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {% if action == 'add' %}Add Stock{% else %}Remove Stock{% endif %} - Inventory Management System
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>
+        {% if action == 'add' %}
+        <i class="fas fa-plus"></i> Add Stock
+        {% else %}
+        <i class="fas fa-minus"></i> Remove Stock
+        {% endif %}
+    </h1>
+    <a href="{{ url_for('list_products') }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Products
+    </a>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <!-- Product Details Card -->
+        <div class="card dashboard-card mb-4">
+            <div class="card-header bg-info text-white">
+                <i class="fas fa-box"></i> Product Details
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Price:
+                        <span class="badge bg-primary rounded-pill">${{ "%.2f"|format(product.price) }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Current Stock:
+                        <span class="badge bg-{% if product.quantity <= 5 %}danger{% else %}success{% endif %} rounded-pill">{{ product.quantity }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <!-- Stock Form -->
+        <div class="form-container">
+            <form id="stockForm" method="post" action="{{ url_for(action + '_stock', product_id=product.product_id) }}">
+                <input type="hidden" id="actionType" value="{{ action }}">
+                {% if action == 'remove' %}
+                <input type="hidden" id="maxAvailable" value="{{ product.quantity }}">
+                {% endif %}
+                
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">
+                        {% if action == 'add' %}Quantity to Add{% else %}Quantity to Remove{% endif %}
+                    </label>
+                    <input type="number" class="form-control" id="quantity" name="quantity" min="1" 
+                        {% if action == 'remove' %}max="{{ product.quantity }}"{% endif %} required>
+                    
+                    {% if action == 'remove' %}
+                    <div class="form-text">Maximum available: {{ product.quantity }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="user" class="form-label">User (Optional)</label>
+                    <input type="text" class="form-control" id="user" name="user" placeholder="Enter your name">
+                    <div class="form-text">Enter the name of the person performing this operation</div>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-{% if action == 'add' %}success{% else %}warning{% endif %}">
+                        {% if action == 'add' %}
+                        <i class="fas fa-plus-circle"></i> Add to Inventory
+                        {% else %}
+                        <i class="fas fa-minus-circle"></i> Remove from Inventory
+                        {% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

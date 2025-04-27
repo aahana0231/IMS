@@ -1,0 +1,18 @@
+[
+  {
+    "product_id": "bab8aa53-e9f8-49ec-a107-fc3521699b1c",
+    "name": "Laptop",
+    "description": "High-performance laptop with 16GB RAM",
+    "price": 1099.0,
+    "quantity": 11,
+    "category": "7a544c39-c78b-4b5a-b8dc-e2a98a1a474e"
+  },
+  {
+    "product_id": "d954d812-5a2e-4508-a409-a774f4d7e897",
+    "name": "PHONE ",
+    "description": "Model-16 pro \r\nStorage- 128 gb",
+    "price": 999.0,
+    "quantity": 20,
+    "category": "7a544c39-c78b-4b5a-b8dc-e2a98a1a474e"
+  }
+]

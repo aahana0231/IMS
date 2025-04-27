@@ -1,0 +1,132 @@
+/* Base styles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+}
+
+.container {
+    flex: 1;
+}
+
+/* Dashboard card styling */
+.dashboard-card {
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    margin-bottom: 20px;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card .card-header {
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 1rem;
+    border-radius: 8px 8px 0 0;
+}
+
+.dashboard-card .card-body {
+    padding: 1.5rem;
+}
+
+.dashboard-stats {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+/* Table styling */
+.table-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f8ff;
+}
+
+/* Form styling */
+.form-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.btn-action {
+    margin-right: 5px;
+}
+
+/* Alert styling */
+.stock-low {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+/* Low stock warning levels */
+.stock-warning {
+    background-color: #fff3cd;
+}
+
+.stock-danger {
+    background-color: #f8d7da;
+}
+
+/* Badge styling */
+.badge-category {
+    background-color: #6c757d;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+/* Action buttons */
+.btn-circle {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    font-size: 0.8rem;
+}
+
+/* Transaction types */
+.transaction-in {
+    color: #28a745;
+}
+
+.transaction-out {
+    color: #dc3545;
+}
+
+/* Responsive tables */
+@media (max-width: 767.98px) {
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+    
+    .dashboard-stats {
+        font-size: 2.5rem;
+    }
+} 

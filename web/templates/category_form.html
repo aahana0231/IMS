@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {% if category %}Edit Category{% else %}Add Category{% endif %} - Inventory Management System
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>
+        <i class="fas fa-tag"></i> 
+        {% if category %}Edit Category{% else %}Add Category{% endif %}
+    </h1>
+    <a href="{{ url_for('list_categories') }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Categories
+    </a>
+</div>
+
+<div class="form-container">
+    <form method="post" action="{% if category %}{{ url_for('edit_category', category_id=category.category_id) }}{% else %}{{ url_for('add_category') }}{% endif %}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Category Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{% if category %}{{ category.name }}{% endif %}" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="description" class="form-label">Description (Optional)</label>
+            <textarea class="form-control" id="description" name="description" rows="3">{% if category %}{{ category.description or '' }}{% endif %}</textarea>
+        </div>
+        
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="reset" class="btn btn-outline-secondary">Reset</button>
+            <button type="submit" class="btn btn-primary">
+                {% if category %}
+                <i class="fas fa-save"></i> Update Category
+                {% else %}
+                <i class="fas fa-plus"></i> Add Category
+                {% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %} 
